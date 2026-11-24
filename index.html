@@ -252,6 +252,58 @@
           </svg>
           <figcaption><b>제어 가중</b>이동과 공격을 모두 막으면 1.0, 하나만 막으면 0.6, 느려지기만 하면 0.3</figcaption>
         </figure>
+        <figure class="fig wide sim" id="sim">
+          <h4 class="card-h">마법 파워 계산기</h4>
+          <p class="card-sub">수치를 바꿔 직접 마법을 만들어 보세요. M2 기준(제어 1초 = 근접 공격 1대 = 18)으로 계산합니다.</p>
+          <div class="sim-grid">
+            <div class="sim-inputs">
+              <label class="sim-row" for="simStun">
+                <span class="sim-lab t1">1인 최대 기절량<small>데미지</small></span>
+                <span class="sim-ctl"><input type="range" id="simStunRange" min="0" max="100" step="1" value="35" aria-label="1인 최대 기절량 슬라이더"><input type="number" id="simStun" min="0" max="200" step="1" value="35"></span>
+              </label>
+              <label class="sim-row" for="simDelivery">
+                <span class="sim-lab t2">전달 방식<small>명중 계수</small></span>
+                <span class="sim-ctl">
+                  <select id="simDelivery">
+                    <option value="1.0">즉발 (1.0)</option>
+                    <option value="0.8" selected>투사체 (0.8)</option>
+                    <option value="0.6">지연 착탄 (0.6)</option>
+                    <option value="0.6">장판 (0.6)</option>
+                    <option value="0.6">돌진 (0.6)</option>
+                    <option value="0.4">설치 (0.4)</option>
+                  </select>
+                </span>
+              </label>
+              <div class="sim-row">
+                <span class="sim-lab t3">제어<small>종류와 시간(초)</small></span>
+                <div class="sim-ctl sim-ctrls">
+                  <div id="simCtrlList"></div>
+                  <button type="button" class="sim-add" id="simAddCtrl">제어 더하기</button>
+                </div>
+              </div>
+              <label class="sim-row" for="simBonus">
+                <span class="sim-lab t5">특수 보너스<small>숫자로 안 잡히는 가치, 빼기도 가능</small></span>
+                <span class="sim-ctl"><input type="number" id="simBonus" min="-50" max="50" step="1" value="0"></span>
+              </label>
+            </div>
+            <div class="sim-out" aria-live="polite">
+              <div class="sim-total"><span>마법 파워</span><strong id="simPower">39.4</strong></div>
+              <p class="sim-verdict" id="simVerdict">목표 범위 안</p>
+              <div class="sim-bar" aria-hidden="true">
+                <div class="sim-band"></div>
+                <div class="sim-fill" id="simFill"></div>
+                <div class="sim-ticks"><span style="left:0">0</span><span style="left:33.33%">40</span><span style="left:75%">90</span><span style="left:100%">120</span></div>
+              </div>
+              <p class="sim-bandlab">목표 파워 40~90 (M2)</p>
+              <dl class="sim-parts">
+                <div><dt>기절 부분</dt><dd id="simPartStun">16</dd></div>
+                <div><dt>제어 부분</dt><dd id="simPartCtrl">23.4</dd></div>
+                <div><dt>특수 보너스</dt><dd id="simPartBonus">0</dd></div>
+              </dl>
+              <p class="sim-formula" id="simFormula"></p>
+            </div>
+          </div>
+        </figure>
         <figure class="fig wide">
           <div class="struct" role="img" aria-label="전달 방식 6종과 효과 54줄을 조합하면 스킬 32종">
             <div class="box"><b>전달 방식 6</b><div class="pills"><span>즉발</span><span>투사체</span><span>지연 착탄</span><span>장판</span><span>설치</span><span>돌진</span></div></div>

@@ -317,3 +317,51 @@ footer .inner { max-width: var(--max); margin: 0 auto; padding: 24px 16px; }
 .retro-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .retro-col li b { display: block; font-size: 15px; }
 .retro-col li span { display: block; font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 3px; }
+
+/* 마법 파워 계산기 */
+.sim-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 760px) { .sim-grid { grid-template-columns: 1fr; } }
+.sim-inputs { display: grid; gap: 12px; min-width: 0; }
+.sim-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: start; }
+@media (max-width: 480px) { .sim-row { grid-template-columns: 1fr; gap: 4px; } }
+.sim-lab { font-size: 14px; font-weight: 600; border-left: 3px solid var(--c); padding-left: 8px; }
+.sim-lab small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+.sim-ctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
+.sim input[type="number"], .sim select { font: inherit; font-size: 14px; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; min-width: 0; }
+.sim input[type="number"] { width: 80px; font-variant-numeric: tabular-nums; }
+.sim input[type="range"] { flex: 1 1 120px; min-width: 0; accent-color: var(--s1); }
+.sim select { max-width: 100%; }
+.sim input:focus-visible, .sim select:focus-visible, .sim button:focus-visible { outline: 2px solid var(--s1); outline-offset: 1px; }
+.sim-ctrls { flex-direction: column; align-items: stretch; }
+.sim-ctrl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
+.sim-ctrl select { flex: 1 1 160px; }
+.sim-ctrl input[type="number"] { width: 70px; }
+.sim-unit { font-size: 13px; color: var(--muted); }
+.sim-del, .sim-add { font: inherit; font-size: 13px; cursor: pointer; border-radius: 6px; padding: 4px 10px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); }
+.sim-add { align-self: flex-start; color: var(--s1); border-color: var(--s1); }
+.sim-del:hover { color: var(--s2); border-color: var(--s2); }
+.sim-out { background: var(--surface-2); border-radius: 10px; padding: 16px; min-width: 0; }
+.sim-total span { display: block; font-size: 13px; color: var(--muted); }
+.sim-total strong { font-size: 40px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.sim-verdict { margin: 4px 0 12px; font-size: 14px; font-weight: 600; }
+.sim-verdict.ok { color: var(--s1); }
+.sim-verdict.low, .sim-verdict.high { color: var(--s2); }
+.sim-bar { position: relative; height: 14px; border-radius: 7px; background: var(--surface); margin-bottom: 22px; }
+.sim-band { position: absolute; top: 0; bottom: 0; left: 33.33%; width: 41.67%; background: var(--s1-soft); border-left: 1px dashed var(--s1); border-right: 1px dashed var(--s1); }
+.sim-fill { position: absolute; top: 3px; bottom: 3px; left: 0; width: 0; border-radius: 4px; background: var(--s1); transition: width .2s; }
+@media (prefers-reduced-motion: reduce) { .sim-fill { transition: none; } }
+.sim-ticks span { position: absolute; top: 18px; transform: translateX(-50%); font-size: 11px; color: var(--muted); }
+.sim-ticks span:first-child { transform: none; }
+.sim-ticks span:last-child { transform: translateX(-100%); }
+.sim-bandlab { margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.sim-parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0; }
+.sim-parts div { background: var(--surface); border-radius: 6px; padding: 6px 8px; min-width: 0; }
+.sim-parts dt { font-size: 11px; color: var(--muted); }
+.sim-parts dd { margin: 0; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sim-formula { margin: 10px 0 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; word-break: break-all; }
+.sim-ctrl select { flex: 1 1 150px; }
+.sim-del { width: 30px; height: 30px; padding: 0; font-size: 16px; line-height: 1; }
+.sim-ctrl { flex-wrap: nowrap; }
+.sim-ctrl select { flex: 1 1 0; width: 0; min-width: 0; }
+.sim-ctrl input[type="number"] { width: 58px; flex: none; }
+.sim-ctrl .sim-unit, .sim-ctrl .sim-del { flex: none; }

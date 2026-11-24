@@ -148,3 +148,91 @@
     for (var k = 0; k < 32; k++) { var c = document.createElement('i'); if (k >= 32 - off) c.className = 'off'; w.appendChild(c); }
   });
 })();
+
+// 마법 파워 계산기 (M2 기준: 제어 1초 = 18)
+(function () {
+  var root = document.getElementById('sim');
+  if (!root) return;
+  var CTRL = [['이동, 공격 모두 막음', 1.0], ['하나만 막음', 0.6], ['둔화', 0.3]];
+  var stun = document.getElementById('simStun');
+  var stunRange = document.getElementById('simStunRange');
+  var delivery = document.getElementById('simDelivery');
+  var bonus = document.getElementById('simBonus');
+  var list = document.getElementById('simCtrlList');
+  var addBtn = document.getElementById('simAddCtrl');
+  var n = 0;
+  function fmt(v) { return (Math.round(v * 10) / 10).toString(); }
+  function num(el) { var v = parseFloat(el.value); return isFinite(v) ? v : 0; }
+
+  function addCtrl(typeIdx, secs) {
+    n++;
+    var row = document.createElement('div');
+    row.className = 'sim-ctrl';
+    var sel = document.createElement('select');
+    sel.id = 'simCtrlType' + n;
+    sel.setAttribute('aria-label', '제어 종류');
+    CTRL.forEach(function (c, i) {
+      var o = document.createElement('option');
+      o.value = c[1];
+      o.textContent = c[0] + ' (' + c[1].toFixed(1) + ')';
+      if (i === typeIdx) o.selected = true;
+      sel.appendChild(o);
+    });
+    var sec = document.createElement('input');
+    sec.type = 'number'; sec.min = '0'; sec.max = '10'; sec.step = '0.05'; sec.value = secs; sec.id = 'simCtrlSec' + n;
+    sec.setAttribute('aria-label', '제어 시간(초)');
+    var unit = document.createElement('span');
+    unit.className = 'sim-unit';
+    unit.textContent = '초';
+    var del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'sim-del';
+    del.textContent = '×';
+    del.setAttribute('aria-label', '이 제어 빼기');
+    del.addEventListener('click', function () { row.remove(); calc(); });
+    sel.addEventListener('change', calc);
+    sec.addEventListener('input', calc);
+    row.appendChild(sel); row.appendChild(sec); row.appendChild(unit); row.appendChild(del);
+    list.appendChild(row);
+  }
+
+  function calc() {
+    var s = Math.max(0, num(stun));
+    var hit = parseFloat(delivery.value);
+    var stunPart = s * hit;
+    var ctrlSum = 0, ctrlText = [];
+    [].forEach.call(list.querySelectorAll('.sim-ctrl'), function (r) {
+      var w = parseFloat(r.querySelector('select').value);
+      var t = Math.max(0, num(r.querySelector('input')));
+      ctrlSum += t * w;
+      ctrlText.push(fmt(t) + ' × ' + w.toFixed(1));
+    });
+    var ctrlPart = ctrlSum * 18;
+    var b = num(bonus);
+    var power = stunPart + ctrlPart + b;
+    document.getElementById('simPower').textContent = fmt(power);
+    document.getElementById('simPartStun').textContent = fmt(stunPart);
+    document.getElementById('simPartCtrl').textContent = fmt(ctrlPart);
+    document.getElementById('simPartBonus').textContent = (b > 0 ? '+' : '') + fmt(b);
+    var ctrlStr = '';
+    if (ctrlText.length === 1) ctrlStr = ' + ' + ctrlText[0] + ' × 18';
+    else if (ctrlText.length > 1) ctrlStr = ' + (' + ctrlText.join(' + ') + ') × 18';
+    document.getElementById('simFormula').textContent =
+      fmt(s) + ' × ' + hit.toFixed(1) + ctrlStr +
+      (b ? (b > 0 ? ' + ' : ' − ') + fmt(Math.abs(b)) : '') + ' = ' + fmt(power);
+    var pct = Math.max(0, Math.min(100, power / 120 * 100));
+    document.getElementById('simFill').style.width = pct + '%';
+    var v = document.getElementById('simVerdict');
+    if (power < 40) { v.textContent = '목표보다 약함 (40 미만)'; v.className = 'sim-verdict low'; }
+    else if (power > 90) { v.textContent = '목표보다 강함 (90 초과)'; v.className = 'sim-verdict high'; }
+    else { v.textContent = '목표 범위 안 (40~90)'; v.className = 'sim-verdict ok'; }
+  }
+
+  stun.addEventListener('input', function () { stunRange.value = Math.min(100, num(stun)); calc(); });
+  stunRange.addEventListener('input', function () { stun.value = stunRange.value; calc(); });
+  delivery.addEventListener('change', calc);
+  bonus.addEventListener('input', calc);
+  addBtn.addEventListener('click', function () { addCtrl(2, 1); calc(); });
+  addCtrl(0, 1);
+  calc();
+})();
