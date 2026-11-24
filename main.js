@@ -11,6 +11,37 @@
     sync();
   });
 
+  // 지금 보고 있는 섹션을 상단 메뉴에 표시
+  var links = {};
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  var secs = Array.prototype.filter.call(document.querySelectorAll('main section[id]'), function (s) { return links[s.id]; });
+  var current = null;
+  function markNav() {
+    var line = 90, found = null;
+    secs.forEach(function (s) { if (s.getBoundingClientRect().top <= line) found = s.id; });
+    // 맨 아래까지 내리면 마지막 섹션
+    if (secs.length && innerHeight + scrollY >= document.documentElement.scrollHeight - 2) found = secs[secs.length - 1].id;
+    if (found === current) return;
+    if (current && links[current]) { links[current].classList.remove('on'); links[current].removeAttribute('aria-current'); }
+    current = found;
+    if (!current) return;
+    var a = links[current];
+    a.classList.add('on');
+    a.setAttribute('aria-current', 'true');
+    var box = a.parentNode;
+    var left = a.offsetLeft - box.offsetLeft;
+    if (left < box.scrollLeft || left + a.offsetWidth > box.scrollLeft + box.clientWidth) {
+      box.scrollTo({ left: left - 16, behavior: 'smooth' });
+    }
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; markNav(); });
+  }, { passive: true });
+  markNav();
+
   var NS = 'http://www.w3.org/2000/svg';
   function el(tag, attrs, parent, text) {
     var n = document.createElementNS(NS, tag);
@@ -64,18 +95,6 @@
       el('text', { x: 104 + h[1] * 180 + 8, y: y + 16, 'class': 'ti' }, hit, h[1].toFixed(1));
     });
   }
-
-  // 효과음 파형 (설명용 그림)
-  var before = [], after = [], i;
-  for (i = 0; i < 30; i++) {
-    before.push(Math.min(0.95, 0.15 + 0.75 * Math.exp(-Math.pow((i - 5) / 3, 2)) + 0.6 * Math.exp(-Math.pow((i - 14) / 4, 2)) + 0.08 * ((i * 7) % 3)));
-  }
-  for (i = 0; i < 15; i++) after.push(Math.max(0.12, 0.92 * Math.exp(-i / 4.5)));
-  document.querySelectorAll('[data-wave]').forEach(function (n) {
-    (n.dataset.wave === 'before' ? before : after).forEach(function (a) {
-      var b = document.createElement('i'); b.style.height = Math.round(a * 100) + '%'; n.appendChild(b);
-    });
-  });
 
   // 음량 와플
   document.querySelectorAll('.waffle').forEach(function (w) {
