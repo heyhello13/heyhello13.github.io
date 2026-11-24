@@ -1,0 +1,11 @@
+﻿BuffId,Name,Desc,Delivery,Duration,EndOnStun,Bonus,Weight1R,Weight2R,Weight3R,RareWeight1R,RareWeight2R,RareWeight3R,EffectGroup,FxKey,DropPrefab,Icon,Status,DashTurn,DashSpeed,DashTime,Pierce,Bounce,LaunchStunned,HitsCaster,DashFly,DashHitTolerance,DashHitLatency,Weight2RRank1,Weight2RRank2,Weight2RRank3,Weight2RRank4
+2001,반사,2초 동안 반짝이는 크리스탈에 들어간다. 날아온 마법을 쏜 사람에게 그대로 돌려준다.,Self,2,true,20,12,1,12,0,0,0,2001,Reflect,Drop_Buff,Icon_Buff_2001,Proposed,0,0,0,0,0,false,false,false,0,0,24,24,24,48
+2002,로켓 빗자루,"빗자루에 올라타 바라보는 방향으로 날아서 돌진한다. 부딪힌 상대는 기절이 많이 쌓이고 밀려나며, 기절한 상대는 날아간다.",Dash,1.5,true,10,12,0,12,0,0,0,2002,Broom,Drop_Buff,Icon_Buff_2002,Proposed,3600,17,1.5,3,0,true,false,true,1.5,0.3,0,0,0,0
+2003,다리근육강화,다리가 튼튼해져 5초 동안 엄청 빨리 달리고 높이 뛴다. 기절하면 풀린다.,Self,5,true,20,12,0,12,0,12,0,2003,Boost,Drop_Buff,Icon_Buff_2003,Proposed,0,0,0,0,0,false,false,false,0,0,0,0,0,24
+2004,회복 포션,포션을 마셔 날아간 횟수를 하나 되돌린다.,Self,0,true,35,12,1,12,0,0,0,2004,Potion,Drop_Buff,Icon_Buff_2004,Proposed,0,0,0,0,0,false,false,false,0,0,24,24,24,48
+2005,회심의 한방,"30초 안에 휘두르는 근접 공격 한 번에 회심이 실린다. 휘두르는 거리와 무기가 1.5배 커지고, 맞은 상대를 한 방에 기절시키고 밀쳐 낸다. 빗나가도 사라진다.",Self,30,true,72,12,1,12,12,12,12,2005,Critical,Drop_Buff,Icon_Buff_2005,Proposed,0,0,0,0,0,false,false,false,0,0,24,24,24,48
+2006,팔근육강화,"팔이 튼튼해져 5초 동안 근접 공격이 1.5배 세지고, 때린 상대를 살짝 밀쳐 낸다. 기절하면 풀린다.",Self,5,true,0,12,1,12,0,0,0,2006,Arm,Drop_Buff,Icon_Buff_2006,Proposed,0,0,0,0,0,false,false,false,0,0,24,24,24,48
+2007,효과증폭,30초 안에 쓰는 다음 마법 한 번의 범위가 크게 넓어지고 기절량이 2배가 된다. 시한폭탄·과녁 스티커에는 효과가 없다.,Self,30,true,40,4,1,4,12,12,12,2007,Amplify,Drop_Buff,Icon_Buff_2007,Proposed,0,0,0,0,0,false,false,false,0,0,7,8,9,24
+2008,무거운 슈퍼아머,4초 동안 몸이 단단해져 받는 기절량이 크게 줄고 상태이상에 걸리지 않는다. 대신 처음엔 아주 느리게 움직이다가 2초에 걸쳐 원래 속도로 돌아온다. 기절하면 풀린다.,Self,4,true,-21.6,12,1,12,0,0,0,2008,SuperArmor,Drop_Buff,Icon_Buff_2008,Proposed,0,0,0,0,0,false,false,false,0,0,24,24,24,48
+2009,슈퍼아머,4초 동안 몸이 단단해져 받는 기절량이 크게 줄고 상태이상에 걸리지 않는다. 기절하면 풀린다.,Self,4,true,0,0,0,0,12,12,12,2009,SuperArmorGold,Drop_Buff,Icon_Buff_2009,Proposed,0,0,0,0,0,false,false,false,0,0,0,0,0,0
+2010,투명화 물약,5초 동안 다른 사람 눈에 보이지 않는다. 공격하거나 마법을 쓰면 바로 드러난다.,Self,5,true,40,12,1,12,0,0,0,2010,Invisible,Drop_Buff,Icon_Buff_2010,Proposed,0,0,0,0,0,false,false,false,0,0,48,24,24,48

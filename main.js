@@ -65,30 +65,64 @@
   }
 
   // 설문 점수 (2.5~4.0 → y 185~35)
-  var slope = document.getElementById('slope');
-  if (slope) {
-    var xs = [56, 146, 236];
+  var survey = [
+    { name: '밸런스', c: 'var(--s1)', v: [2.8, 3.0, 3.4] },
+    { name: '다양성', c: 'var(--s3)', v: [null, 3.4, 3.6] },
+    { name: '재미', c: 'var(--s2)', v: [3.5, 4.1, 4.0] }
+  ];
+  function drawSurvey(g, xs, endX, showVals) {
     var sy = function (v) { return 185 - (v - 2.5) * 100; };
-    [
-      { name: '밸런스', c: 'var(--s1)', v: [2.8, 3.0, 3.4] },
-      { name: '다양성', c: 'var(--s3)', v: [null, 3.4, 3.6] },
-      { name: '재미', c: 'var(--s2)', v: [3.5, 4.1, 4.0] }
-    ].forEach(function (s) {
+    survey.forEach(function (s) {
       var pts = [];
       s.v.forEach(function (v, i) { if (v != null) pts.push([xs[i], sy(v), v, i]); });
-      el('polyline', { points: pts.map(function (p) { return p[0] + ',' + p[1]; }).join(' '), fill: 'none', stroke: s.c, 'stroke-width': 2 }, slope);
-      pts.forEach(function (p) {
-        el('title', {}, el('circle', { cx: p[0], cy: p[1], r: 5, fill: s.c, stroke: 'var(--surface)', 'stroke-width': 2 }, slope), s.name + ' M' + (p[3] + 1) + ' ' + p[2].toFixed(1));
+      el('polyline', { points: pts.map(function (p) { return p[0] + ',' + p[1]; }).join(' '), fill: 'none', stroke: s.c, 'stroke-width': 2 }, g);
+      pts.forEach(function (p, k) {
+        el('title', {}, el('circle', { cx: p[0], cy: p[1], r: 5, fill: s.c, stroke: 'var(--surface)', 'stroke-width': 2 }, g), s.name + ' M' + (p[3] + 1) + ' ' + p[2].toFixed(1));
+        if (showVals && k < pts.length - 1) el('text', { x: p[0], y: p[1] - 11, 'text-anchor': 'middle', 'class': 'ti' }, g, p[2].toFixed(1));
       });
       var last = pts[pts.length - 1];
-      el('text', { x: 248, y: last[1] + 4, 'class': 'ti' }, slope, s.name + ' ' + last[2].toFixed(1));
+      el('text', { x: endX, y: last[1] + 4, 'class': 'ti' }, g, s.name + ' ' + last[2].toFixed(1));
+    });
+  }
+  var slope = document.getElementById('slope');
+  if (slope) drawSurvey(slope, [56, 146, 236], 248, false);
+  // 일정 + 설문 한 그래프 (10/6 = 0일, x = 60 + 일 × 10.4, 점수 2.5~4.5 → y 200~20)
+  var tl = document.getElementById('timeline');
+  if (tl) {
+    var dx = function (d) { return 60 + d * 10.4; };
+    var vy = function (v) { return 200 - (v - 2.5) * 90; };
+    [['M1 개발', 0, 17, '10/6 ~ 10/22'], ['M2 개발', 20, 31, '10/26 ~ 11/5'], ['M3 폴리싱', 34, 45, '11/9 ~ 11/19']].forEach(function (b) {
+      el('title', {}, el('rect', { x: dx(b[1]), y: 20, width: dx(b[2]) - dx(b[1]), height: 180, rx: 4, fill: 'var(--surface-2)' }, tl), b[0] + ' ' + b[3]);
+      el('text', { x: dx(b[1]) + 8, y: 36, 'class': 't' }, tl, b[0]);
+    });
+    [3.0, 3.5, 4.0].forEach(function (v) {
+      el('line', { x1: 60, y1: vy(v), x2: 560, y2: vy(v), 'class': 'gl' }, tl);
+      el('text', { x: 50, y: vy(v) + 4, 'text-anchor': 'end', 'class': 't' }, tl, v.toFixed(1));
+    });
+    el('line', { x1: 60, y1: 200, x2: 560, y2: 200, 'class': 'ax' }, tl);
+    [[17, '10/23'], [31, '11/6'], [44, '11/19'], [48, '11/23']].forEach(function (t) {
+      var x = dx(t[0]);
+      el('title', {}, el('rect', { x: x - 5, y: 195, width: 10, height: 10, fill: 'var(--muted)', stroke: 'var(--surface)', 'stroke-width': 2, transform: 'rotate(45 ' + x + ' 200)' }, tl), '플레이테스트 ' + t[1]);
+      el('text', { x: x, y: 224, 'text-anchor': 'middle', 'class': 't' }, tl, t[1]);
+    });
+    el('text', { x: 60, y: 224, 'text-anchor': 'middle', 'class': 't' }, tl, '10/6');
+    var days = [17, 31, 48];
+    survey.forEach(function (s) {
+      var pts = [];
+      s.v.forEach(function (v, i) { if (v != null) pts.push([dx(days[i]), vy(v), v, i]); });
+      el('polyline', { points: pts.map(function (p) { return p[0] + ',' + p[1]; }).join(' '), fill: 'none', stroke: s.c, 'stroke-width': 2 }, tl);
+      pts.forEach(function (p) {
+        el('title', {}, el('circle', { cx: p[0], cy: p[1], r: 5, fill: s.c, stroke: 'var(--surface)', 'stroke-width': 2 }, tl), s.name + ' M' + (p[3] + 1) + ' ' + p[2].toFixed(1));
+      });
+      var last = pts[pts.length - 1];
+      el('text', { x: last[0] + 12, y: last[1] + 4, 'class': 'ti' }, tl, s.name + ' ' + last[2].toFixed(1));
     });
   }
 
   // 명중 계수
   var hit = document.getElementById('hit');
   if (hit) {
-    [['즉발', 1.0], ['투사체', 0.8], ['지연·장판·돌진', 0.6], ['설치', 0.4]].forEach(function (h, i) {
+    [['즉발', 1.0], ['투사체', 0.8], ['지연, 장판, 돌진', 0.6], ['설치', 0.4]].forEach(function (h, i) {
       var y = 14 + i * 36;
       el('text', { x: 96, y: y + 16, 'text-anchor': 'end', 'class': 't' }, hit, h[0]);
       el('title', {}, el('rect', { x: 104, y: y, width: h[1] * 180, height: 22, rx: 4, fill: 'var(--s1)', 'fill-opacity': (0.45 + h[1] * 0.55).toFixed(2) }, hit), h[0] + ' ' + h[1].toFixed(1));
