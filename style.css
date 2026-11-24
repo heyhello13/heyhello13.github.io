@@ -258,3 +258,51 @@ footer .inner { max-width: var(--max); margin: 0 auto; padding: 24px 16px; }
 .dlrow .dl { margin-top: 0; }
 .dl::before { content: ""; width: 9px; height: 9px; border: 0; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); margin-right: 2px; }
 .get { font-size: 12px; color: var(--muted); }
+
+/* 파워 공식 풀이 */
+.eq { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; }
+.eq .eq-l { margin-right: 2px; }
+.eq .op { color: var(--muted); font-weight: 400; }
+.eq .term { border-radius: 6px; padding: 2px 10px; border-bottom: 3px solid; background: var(--surface-2); }
+.t1 { --c: var(--s1); } .t2 { --c: var(--s3); } .t3 { --c: var(--s2); } .t4 { --c: var(--muted); } .t5 { --c: var(--ink); }
+.eq .term { border-color: var(--c); }
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 10px; margin: 14px 0 0; }
+.terms div { border-top: 3px solid var(--c); background: var(--surface-2); border-radius: 0 0 8px 8px; padding: 10px 12px; min-width: 0; }
+.terms dt { font-weight: 700; font-size: 14px; }
+.terms dd { margin: 4px 0 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.terms dd b { color: var(--ink); font-weight: 600; }
+.eq-ex { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.eq-ex b { color: var(--ink); }
+.steps .hl { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 60%, var(--s1-soft) 60%); }
+.card-h { margin: 0; font-size: 16px; }
+.card-sub { margin: 2px 0 12px; font-size: 13px; color: var(--muted); }
+
+/* 강조 사례 */
+.case-study { margin-top: 24px; background: var(--s1-soft); border-radius: 14px; padding: clamp(16px, 3vw, 24px); }
+.case-tag { margin: 0; font-size: 13px; font-weight: 700; color: var(--s1); }
+.case-study h3 { margin: 4px 0 16px; font-size: 21px; line-height: 1.4; }
+.case-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.case-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 760px) { .case-steps { grid-template-columns: 1fr; } }
+.case-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: c; }
+.case-steps li { counter-increment: c; display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; }
+.case-steps li::before { content: counter(c); grid-row: 1 / span 2; width: 24px; height: 24px; border-radius: 50%; background: var(--s1); color: var(--surface); font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.case-steps b { font-size: 15px; }
+.case-steps span { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.case-study .fig { background: var(--surface); }
+.case-steps li > b, .case-steps li > span { grid-column: 2; }
+.sa-fig { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 18px; align-items: center; }
+.sa-fig > figcaption { grid-column: 1 / -1; }
+@media (max-width: 700px) { .sa-fig { grid-template-columns: 1fr; } }
+.sa-info { display: grid; grid-template-columns: 88px minmax(0, 1fr); column-gap: 12px; row-gap: 10px; align-items: center; background: var(--surface-2); border-radius: 10px; padding: 12px; }
+.sa-info img { width: 88px; height: 88px; }
+.sa-info b { display: block; font-size: 15px; }
+.sa-kind { font-size: 12px; color: var(--muted); }
+.sa-info ul { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.sa-info li { padding-left: 18px; position: relative; }
+.sa-info li::before { position: absolute; left: 0; font-weight: 700; }
+.sa-info li.plus::before { content: "+"; color: var(--s1); }
+.sa-info li.minus::before { content: "−"; color: var(--s2); }
+.sa-chart { min-width: 0; }
+.sa-cap { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.sa-cap b { color: var(--ink); margin-right: 4px; }

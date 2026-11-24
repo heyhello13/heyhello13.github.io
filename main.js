@@ -130,6 +130,18 @@
     });
   }
 
+  // 제어 가중
+  var ctrl = document.getElementById('ctrl');
+  if (ctrl) {
+    [['다 막음', 1.0, '넘어짐, 빙결, 그랩, 밀침'], ['하나만 막음', 0.6, '변신, 속박, 공중 부양'], ['느려지기만', 0.3, '둔화, 미끄러짐, 끌어당김']].forEach(function (h, i) {
+      var y = 8 + i * 46;
+      el('text', { x: 96, y: y + 16, 'text-anchor': 'end', 'class': 't' }, ctrl, h[0]);
+      el('title', {}, el('rect', { x: 104, y: y, width: h[1] * 180, height: 22, rx: 4, fill: 'var(--s3)', 'fill-opacity': (0.45 + h[1] * 0.55).toFixed(2) }, ctrl), h[0] + ' ' + h[1].toFixed(1) + ': ' + h[2]);
+      el('text', { x: 104 + h[1] * 180 + 8, y: y + 16, 'class': 'ti' }, ctrl, h[1].toFixed(1));
+      el('text', { x: 104, y: y + 36, 'class': 't', style: 'font-size:11px' }, ctrl, h[2]);
+    });
+  }
+
   // 음량 와플
   document.querySelectorAll('.waffle').forEach(function (w) {
     var off = +w.dataset.off;
