@@ -306,3 +306,14 @@ footer .inner { max-width: var(--max); margin: 0 auto; padding: 24px 16px; }
 .sa-chart { min-width: 0; }
 .sa-cap { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
 .sa-cap b { color: var(--ink); margin-right: 4px; }
+
+/* 회고 */
+.retro { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .retro { grid-template-columns: 1fr; } }
+.retro-col { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; min-width: 0; }
+.retro-col h3 { margin: 0 0 12px; font-size: 17px; }
+.retro-col.good h3 { color: var(--s1); }
+.retro-col.bad h3 { color: var(--s2); }
+.retro-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.retro-col li b { display: block; font-size: 15px; }
+.retro-col li span { display: block; font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 3px; }
